@@ -2,37 +2,567 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar-body {
+  width: 100%;
+  height: 4rem;
+  background-color: black;
   display: flex;
-  flex-direction: column;
+  color: white;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.left-navbar-section {
+  margin-left: 5rem;
+}
+
+.left-navbar-section h2 {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.right-navbar-section {
+  display: flex;
+  margin-right: 5rem;
+
 }
 
-@keyframes App-logo-spin {
-  from {
+.right-navbar-section h5 {
+  color: white;
+  margin: 0 0.3rem;
+  padding: 0.3rem 0.4rem;
+  /* border: 0.1px solid gray;
+  border-radius: 4px; */
+}
+
+.main-page-bg{
+  background-image: url("/src/images/thunderstorm2.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 91vh;
+}
+
+.Home-heading {
+  color: white;
+  text-shadow: 1px 1px 4px black;
+  font-size: 7vw;
+  font-weight: 900;
+  margin: 0vw auto;
+  padding-top: 10vw;
+  margin-bottom: 0;
+}
+
+.home-lead {
+  font-size: 1.4vw;
+  color: white;
+  text-shadow: 1.5px 1.5px 3px black;
+}
+
+.home-forecast-created-by{
+  font-weight: 600;
+}
+
+.img-main-forecast {
+  width: 5.5rem;
+  height: 5.5rem;
+}
+
+.city-name-description-forecast h4 {
+  word-spacing: 0.7rem;
+  font-size: 1.5rem;
+}
+
+.city-name-description-forecast h4 span {
+  font-size: 2.3rem;
+  font-weight: 700;
+}
+.city-name-description-forecast h3 {
+  font-size: 1.8rem;
+}
+
+/* result component */
+.temp-details-box {
+  margin-left: 4.7rem;
+  width: 35%;
+}
+
+.weather-temp-detail-box{
+  display: flex;
+  justify-content: space-between;
+  margin: 3px 8px;
+  padding: 3.5px 0;
+  border-bottom: 1px solid grey;
+}
+.weather-temp-detail-box:last-child{
+  border-bottom: 0px solid grey;
+}
+.weather-temp-detail-box h5{
+  font-weight: bold;
+  font-size: 16.2px;
+  color: white;
+}
+.weather-temp-detail-box span{
+  color: rgb(244, 244, 244);
+}
+.box-color{
+  background-color: rgb(0,0,0,0.2);
+}
+.box-temp-detail-color{
+  background-color: rgb(0,0,0,0.1);
+}
+
+.result-forecast h2 {
+  padding: 0.7rem 0.5rem;
+}
+
+.result-forecast h6 {
+  padding: 0 0.5rem;
+}
+
+.hourlyforecast-heading {
+  color: rgb(222, 221, 221);
+  font-size: 13.2px;
+}
+
+.enter-the-cord-or-city-para{
+  color: white;
+}
+
+/* search component */
+.city-name {
+  margin-left: 4.7rem;
+}
+
+/* loader class */
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.loader {
+  position: relative;
+  border: 7px solid transparent;
+  border-top: 7px solid #080808;
+  border-radius: 50%;
+  width: 9rem;
+  height: 9rem;
+  animation: spin 1s linear infinite;
+}
+
+.loaderTwo {
+  position: absolute;
+  top: -15%;
+  left: -17%;
+  border: 7px solid transparent;
+  border-top: 7px solid orange;
+  border-radius: 50%;
+  width: 7rem;
+  height: 7rem;
+  margin: 2rem 2rem 2rem 2rem;
+  padding: 2rem 2rem 2rem 2rem;
+  animation: spin 4s linear infinite;
+}
+
+.loaderThree {
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  border: 7px solid transparent;
+  border-top: 7px solid #ff3c00;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  margin: 2rem 2rem 2rem 2rem;
+  padding: 2rem 2rem 2rem 2rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+
+  100% {
     transform: rotate(360deg);
   }
+}
+
+
+
+/* recent component css */
+
+.recent-box {
+  width: 12%;
+  max-height: 70vh;
+  position: absolute;
+  left: 1.1%;
+  top: 13%;
+  text-align: center;
+  overflow-y: hidden;  
+}
+
+.recent-box li {
+  width: 100%;
+  height: 1.9rem;
+  background-color: black;
+  color: white;
+  margin: 5px 0;
+  padding-top: 4.2px;
+  font-weight: 500;
+  font-size: 14px;
+  /* box-shadow: 2px 1px 6px 0.8px rgb(197, 197, 197); */
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.clear-btnn {
+  border-radius: 3px;
+  width: 100%;
+  /* box-shadow: 2px 4px 7px 0.8px rgb(203, 202, 202); */
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* result hourly forecast */
+.overall-hourly-forecast-section {
+  width: 90%;
+}
+
+.overall-time-forecast-section {
+  width: 90%;
+}
+.overall-time-forecast-section h1{
+  font-size: 2.5rem;
+}
+.overall-time-forecast-section h1 span{
+  font-size: 18px;
+}
+
+.overall-uvIndex-forecast-section {
+  width: 90%;
+  margin-left: -1.5rem;
+}
+
+.overall-speed-forecast-section {
+  width: 90%;
+  margin-left: -3rem;
+}
+
+.overall-visibility-forecast-section {
+  width: 90%;
+  /* margin-left: -1.4rem; */
+}
+.overall-visibility-forecast-section h5{
+  font-size: 1.1rem;
+  margin: 0 0;
+}
+
+
+.wrapper {
+  overflow: hidden;
+  scroll-behavior: smooth;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper h5 {
+  margin-left: 0;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  font-size: 17.5px;
+}
+
+.wrapper img {
+  width: 57px;
+  height: 57px;
+  margin-left: 0.87rem;
+}
+
+.wrapper h4 {
+  margin-left: 0.5rem;
+  margin-top: 10px;
+  font-size: 1.55rem;
+}
+
+.speed {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.speed span {
+  font-size: 18px;
+  color: white;
+}
+.visibility{
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: white;
+}
+.visibility span{
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+}
+
+.footer-main-section h5, i{
+  text-shadow: 1px 1px 2px black;
+}
+
+
+
+/* mobile screens */
+
+@media screen and (max-width: 650px) {
+
+  .Home-heading {
+    font-size: 2.7rem;
+    font-weight: 900;
+    margin: 0rem auto;
+    padding-top: 10rem;
+    margin-bottom: 0;
+  }
+  
+  .home-lead {
+    font-size: 0.8rem;
+    width: 82%;
+    margin: 2px auto;
+  }
+  .home-forecast-created-by{
+    color: white;
+    font-size: 13px;
+    font-weight: 400;
+    margin: 43vh auto;
+    text-shadow: 1px 1px 3px black;
+  }
+
+  /* search component */
+  .city-name {
+    margin-left: 0rem;
+  }
+
+  .temp-details-box {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .left-navbar-section {
+    margin-left: 1.1rem;
+  }
+
+  .left-navbar-section h1 {
+    font-size: 1.5rem;
+  }
+
+  .right-navbar-section {
+    display: flex;
+    margin-right: 0;
+  }
+
+  .right-navbar-section h5 {
+    margin: 0 0.3rem;
+    padding: 0 1rem;
+    font-size: 16px;
+  }
+
+  .mobile-display-none {
+    display: none;
+  }
+
+  .recent-box {
+    display: none;
+  }
+
+  .fa-location-crosshairs {
+    font-size: 1.3rem;
+    margin-top: 5px;
+    margin-bottom: 7px;
+  }
+
+  .img-main-forecast {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .city-name-description-forecast h4 {
+    font-size: 1.5rem;
+    word-spacing: 1rem;
+    margin-top: 0;
+  }
+
+  .city-name-description-forecast h4 span {
+    font-size: 2.2rem;
+  }
+
+  .hourlyforecast-heading {
+    font-size: 13.2px;
+    color: rgb(235, 234, 234);
+  }
+
+  .hourlyforecast-main h1 {
+    font-size: 2.2rem;
+  }
+
+  .wrapper h5 {
+    margin-left: 0;
+    margin-bottom: 14px;
+    margin-top: 7px;
+    font-size: 17.5px;
+  }
+
+  .wrapper img {
+    width: 55px;
+    height: 55px;
+    margin-left: 0.6rem;
+  }
+
+  .wrapper h4 {
+    margin-left: 0.5rem;
+    margin-top: 15px;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  /* result hourly forecast */
+  .overall-hourly-forecast-section {
+    width: 100%;
+  }
+
+  .overall-time-forecast-section {
+    width: 100%;
+  }
+
+  .overall-uvIndex-forecast-section {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .overall-speed-forecast-section {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .overall-visibility-forecast-section {
+    width: 100%;
+  }
+  .enter-the-cord-or-city-para{
+    width: 80%;
+    margin-left: 2rem;
+  }
+}
+
+
+
+@media screen and (min-width:1100px) and (max-width: 1290px) {
+  
+  .recent-box {
+    width: 12vw;
+    position: absolute;
+    top: 12.2%;
+    left: 0.9%;
+  }
+  .recent-box h3{
+    font-size: 1.9vw;
+  }
+  .clear-btnn {
+    font-size: 13.5px;
+  }
+  .temp-details-box{
+    margin-left: 5rem;
+    width: 33%;
+  }
+
+  .city-name-description-forecast h3{
+    font-size: 18px;
+  }
+  .wrapper img {
+    margin-left: 0.4rem;
+  }
+  .enter-the-cord-or-city-para{
+    width: 80%;
+    margin-left: 7rem;
+  }
+  .overall-uvIndex-forecast-section {
+    margin-left: -1.3rem;
+  }
+
+  .overall-speed-forecast-section {
+    margin-left: -2.6rem;
+  }
+
+}
+
+@media screen and (min-width:650px) and (max-width: 1100px){
+  .Home-heading {
+    margin: 0rem auto;
+    padding-top: 17rem;
+  }
+  .home-lead {
+    font-size: 1rem;
+    width: 82%;
+    margin: 2px auto;
+  }
+  .recent-box {
+    width: 16%;
+    position: absolute;
+    top: 11.8%;
+    left: 0.9%;
+  }
+  .clear-btnn {
+    font-size: 13.5px;
+  }
+
+  .enter-the-cord-or-city-para{
+    width: 67%;
+    margin: 15vh auto;
+  }
+
+  .temp-details-box{
+    margin-left: 7.4rem;
+    width: 76%;
+  }
+  .overall-hourly-forecast-section {
+    width: 132%;
+    margin-left: 7.4rem;
+    margin-top: 0.9rem;
+  }
+  
+  .overall-time-forecast-section {
+    width: 132%;
+    margin-left: 7.4rem;
+    margin-top: 0.9rem;
+  }
+  .overall-time-forecast-section h1{
+    font-size: 2.5rem;
+  }
+  
+  .overall-uvIndex-forecast-section {
+    width: 132%;
+    margin-left: 11rem;
+    margin-top: 0.9rem;
+  }
+  
+  .overall-speed-forecast-section {
+    width: 132%;
+    margin-left: 14.4rem;
+    margin-top: 0.9rem;
+  }
+  
+  .overall-visibility-forecast-section {
+    width: 132%;
+    margin-left: 7.4rem;
+    margin-top: 0.9rem;
+  }
+  .overall-visibility-forecast-section h5{
+    font-size: 1.1rem;
+    margin: 0 0;
+  }
+  .cordinates-heading{
+    display: flex;
+    width: 150%;
+  }
+  
 }
