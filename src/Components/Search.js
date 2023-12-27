@@ -8,6 +8,10 @@ export default function Search(props) {
                     <div className="col-md-3 text-start city-name" style={{zIndex: "999"}}>
                         <label htmlFor='city' className='text-white'>Type City Name</label>
                         <input type="text" className="form-control mt-2" name='city' id='city' value={props.city} onChange={props.change} />
+                        <ul className='suggestions-list list-unstyled bg-light'>
+                        <li className='border-bottom  px-3 py-1'>Meerut</li>
+                        <li className='border-bottom  px-3 py-1'>Meerut</li>
+                        </ul>
                     </div>
                     <div className='col-md-1 mt-2 mb-2' style={{zIndex: "999"}}>
                         <br />

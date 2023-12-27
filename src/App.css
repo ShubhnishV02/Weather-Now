@@ -133,6 +133,11 @@
   margin-left: 4.7rem;
 }
 
+.suggestions-list{
+  position: absolute;
+  width: 19.3%;
+}
+
 /* loader class */
 
 .loader-container {
