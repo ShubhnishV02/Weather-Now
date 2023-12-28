@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-export default function Search(props) {
+
+const Search = (props) => {
+
+    
+
+
+
+
     return (
         <div className='container' >
             <form className='mt-4 container'>
@@ -48,3 +56,5 @@ export default function Search(props) {
         </div>
     )
 }
+
+export default Search

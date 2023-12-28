@@ -357,7 +357,7 @@ class Forecast extends Component {
     // Function to get the background image based on weather condition
     const getBackgroundImage = () => {
       const weatherCondition = this.state.weatherData.weather && this.state.weatherData.weather[0].main;
-      console.log(this.state.weatherData);
+      // console.log(this.state.weatherData);
       switch (weatherCondition) {
         case 'Clear':
           return `url(${clearSkyImage})`;
