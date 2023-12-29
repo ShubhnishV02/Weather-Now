@@ -32,6 +32,9 @@ class Forecast extends Component {
       recent: [],
       hourlyData: [],
       uvIndex: '',
+      suggestions: [],
+      SearchTerm: "",
+      message: false,
     }
   }
 
@@ -43,14 +46,15 @@ class Forecast extends Component {
     recent.push({
       lat: this.state.lat,
       lon: this.state.lon,
-      city: this.state.weatherData.name,                                //we don't get directly city name with this.state.city bcoz we remove the city name in each request of axios.
+      city: this.state.weatherData.name,                           //we don't get directly city name with this.state.city bcoz we remove the city name in each request of axios.
     });
     this.setState({ recent }, () => {
       window.localStorage.setItem("recent", JSON.stringify(this.state.recent));
     });
   };
 
-  deleteRecentHandler = () => {                                           // this is used when user triggered the clear button to clear all the recents.
+
+  deleteRecentHandler = () => {                                       // this is used when user triggered the clear button to clear all the recents.
     localStorage.removeItem("recent");
     this.setState({ recent: [] });
   }
@@ -58,8 +62,8 @@ class Forecast extends Component {
 
 
   componentDidMount() {
-    const data = window.localStorage.getItem("recent");
-    let recent = data === null ? [] : JSON.parse(data);                    //terinary operation we used to set the data empty [] or JSON to object form to overcome the error which it comes when the data is null.
+    const data = window.localStorage.getItem("recent");                       // it is used to store the places names in the local storage after getting hit by search or coord.
+    let recent = data === null ? [] : JSON.parse(data);               //terinary operation we used to set the data empty [] or JSON to object form to overcome the error which it comes when the data is null.
     this.setState({ recent });
 
   }
@@ -67,14 +71,9 @@ class Forecast extends Component {
 
 
   // when onClick triggered on the Recent component the reSearchHandler will call and it will get the already stored arguments lat and lon which comes through the 
-  // addDataToRecent function as you can check above . The already stored data fetch by the axios request and it will show the recent place forecast.
+  // addDataToRecent function as you can check above . The already stored data in the local storage fetch by the axios request and it will show the recent place forecast.
 
 
-
-
-
-
-  // Modify your reSearchHandler function in Forecast.js
   reSearchHandler = (lat, lon) => {
     const getTheCurrentTime = (stamp) => {
       const currentTimeData = new Date(stamp * 1000);
@@ -87,15 +86,15 @@ class Forecast extends Component {
       return Math.round(k - 273.15).toString() + "°";
     };
 
-    this.setState({ weatherData: "", hourlyData: [], uvIndex: "" }, () => {              // this setState is run for showing the Loader to User, if the places is changed on Click.
-      this.setState({ lat, lon }, () => {                                         // this setState is run for get the lat and lon coordinates from already stored in recent array and fetch by axios request.      
+    this.setState({ weatherData: "", hourlyData: [], uvIndex: "" }, () => {                  // this setState is run for showing the Loader to User, if the places is changed on Click.
+      this.setState({ lat, lon }, () => {                                         // this setState is run for get the lat and lon coordinates from already stored in recent array in the local storage and fetch by axios request.      
         // Fetch current weather data
         axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lon}&appid=5a1e4432cbaef39b09b86fc012109f8f`)
           .then((result) => {
             this.setState({
               lat: result.data.coord.lat,
               lon: result.data.coord.lon,
-              city: "",
+              city: "",                                // don't show or empty city name in the input value when user already searched once if the city has some value and cordinates present in the cordinates section then it will "search by city on priority instead of cordinates."
               weatherData: result.data,
               isSearched: true,
             });
@@ -104,7 +103,7 @@ class Forecast extends Component {
             console.log(error);
           });
 
-        // Fetch hourly forecast data
+        // Fetch hourly forecast data for every 3 hours searched by Latitude and Longitude with the API
         if (this.state.hourlyData.length < 9) {
           axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${this.state.lat}&lon=${this.state.lon}&appid=5a1e4432cbaef39b09b86fc012109f8f`)
             .then((result) => {
@@ -145,13 +144,15 @@ class Forecast extends Component {
   }
 
 
+// this ChangeHandler binding function runs when the user clicked on city , lat or lon and insert the value.
 
   changeHandler = (event) => {
     const name = event.target.name;
     // console.log(name);
     if (name === "city") {
-      this.setState({
-        city: event.target.value,
+      const city = event.target.value;
+      this.setState({ city }, () => {
+        this.fetchSuggestions(city); // Fetch suggestions when city changes
       });
     } else if (name === "lat") {
       this.setState({
@@ -165,6 +166,42 @@ class Forecast extends Component {
   }
 
 
+  // fetchSuggestions function runs when user enter the city in the input section and city it grabs from the changeHandler binding function used here as a cityName parameter.
+
+  fetchSuggestions = async (cityName) => {
+    try {
+      // Add a validation for cityName length to ignor the errors while typing the city names if not using then it will show the error on every button you typed.
+      if (cityName.length < 3) {
+        this.setState({ suggestions: [], message: false });
+        return;
+      }
+      const response = await axios.get(`https://api.openweathermap.org/data/2.5/find?q=${cityName}&cnt=5&appid=5a1e4432cbaef39b09b86fc012109f8f`);
+
+      /// Check if the response data has a list property
+      if (response.data.list && response.data.list.length > 0) {
+        const suggestions = response.data.list.map((item) => `${item.name}, ${item.sys.country}`);
+        this.setState({ suggestions, message: false });
+      } else {
+        this.setState({ suggestions: [], message: true });
+      }
+    } catch (error) {
+      console.error(error);
+      this.setState({ suggestions: [], message: true });
+    }
+  };
+
+
+  // Handle the click on a suggestion, for example, you can update the state to hide suggestions
+  suggestionClickHandler = (suggestion) => {
+    this.setState({
+      city: suggestion,
+      suggestions: [], // Hide suggestions after a suggestion is clicked
+    });
+  };
+
+
+
+  // it is used for both searched by "City Name" or "Lat and Lon coords".. but it will give priority to city name when both the fields is not empty.
   searchHandler = (e) => {                           // when user clicks on search button ... the button calls a function search and it hits the searchHandler function.
     e.preventDefault()
 
@@ -193,7 +230,7 @@ class Forecast extends Component {
           });
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
 
 
@@ -203,7 +240,7 @@ class Forecast extends Component {
           this.setState({ uvIndex: result.data.value });
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
 
       // Fetch hourly forecast data
@@ -225,7 +262,7 @@ class Forecast extends Component {
           // console.log(this.state.hourlyData);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
     };
     // UI error Handling
@@ -236,26 +273,39 @@ class Forecast extends Component {
     //  the if and else condition. so if user searched with city then it shows with city result and stores the coordinates and after the city name is going to empty in state 
     // and after again searched with city or codinates it will show the result as required.
 
+
+
     if (this.state.city !== "") {
       axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=5a1e4432cbaef39b09b86fc012109f8f`)
         .then((result) => {
-          const { lat, lon } = result.data.coord;
-          fetchWeatherData(lat, lon);
+          this.setState({
+            SearchTerm: result.data.name,
+            country: result.data.sys.country,
+            suggestions: [`${result.data.name}, ${result.data.sys.country}`],
+          }, () => {
+            const { lat, lon } = result.data.coord;
+            fetchWeatherData(lat, lon);
+            // Clear suggestions when the search button is clicked
+            this.setState({ suggestions: [] });
+          });
+          fetchSuggestions(this.state.city); // Fetch suggestions based on the current city input
         })
         .catch(
           (error) => {
-            console.log(error);
+            // console.log(error);
           }
         );
     } else {
       fetchWeatherData(this.state.lat, this.state.lon);
     }
+
   }
 
 
 
+  // locationHandler only calls when the user clicks on the navigator button. it will get the current location data.
 
-  locationHandler = (e) => {                            // when user clicks on navigator button ... the button calls a function getLocation and it hits the locationHandler function.
+  locationHandler = (e) => {                       // when user clicks on navigator button ... the button calls a function getLocation and it hits the locationHandler function.
     e.preventDefault()
     // console.log(this.state.lat);
     this.setState({
@@ -294,7 +344,7 @@ class Forecast extends Component {
                     weatherData: result.data,
                     isSearched: true,
                   }, () => {
-                    this.addDataToRecent();
+                    this.addDataToRecent();            // addDataToRecent calls in the callback to store the location in the local storage and shown in the recent section.
                   }
                   );
                 }
@@ -353,11 +403,15 @@ class Forecast extends Component {
 
 
 
+
+
   render() {
+
     // Function to get the background image based on weather condition
     const getBackgroundImage = () => {
       const weatherCondition = this.state.weatherData.weather && this.state.weatherData.weather[0].main;
       // console.log(this.state.weatherData);
+
       switch (weatherCondition) {
         case 'Clear':
           return `url(${clearSkyImage})`;
@@ -392,6 +446,8 @@ class Forecast extends Component {
           return `url(${defaultImage})`;
       }
     };
+
+
     // Inline styles for the background image
     const backgroundImageStyle = {
       backgroundImage: getBackgroundImage(),
@@ -401,6 +457,8 @@ class Forecast extends Component {
       position: 'relative', // Needed for stacking pseudo-element
       minHeight: '100vh',
     };
+
+    // overlayStyle is used to darken the background image as needed to show the upper side clear or brighter.
     const overlayStyle = {
       content: '""',
       position: 'absolute',
@@ -408,6 +466,7 @@ class Forecast extends Component {
       right: 0,
       bottom: 0,
       left: 0,
+      pointerEvents: "none",
       background: 'rgba(0, 0, 0, 0.2)', // Adjust the alpha value for darkness
     };
 
@@ -422,13 +481,18 @@ class Forecast extends Component {
             lon={this.state.lon}
             city={this.state.city}
             weatherData={this.state.weatherData}
+            SearchTerm={this.state.SearchTerm}
+            suggestions={this.state.suggestions}
+            message={this.state.message}
             change={this.changeHandler}
             getLocation={this.locationHandler}
             search={this.searchHandler}
+            fetchSuggestions={this.fetchSuggestions}
+            suggestionClickHandler={this.suggestionClickHandler}
           >
           </Search>
 
-          <Result isSearched={this.state.isSearched} weatherData={this.state.weatherData} hourlyData={this.state.hourlyData} uvIndex={this.state.uvIndex} >
+          <Result isSearched={this.state.isSearched} weatherData={this.state.weatherData} hourlyData={this.state.hourlyData} uvIndex={this.state.uvIndex}>
           </Result>
         </div>
       </div>

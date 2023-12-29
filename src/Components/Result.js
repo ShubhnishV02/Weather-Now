@@ -1,6 +1,7 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick-theme.css';             // these 3 imports are used for slider in the hourly forecast as install externally.
+
 import React from 'react';
 import Loader from './Loader';
 import Footer from './Footer';
@@ -9,18 +10,24 @@ import Footer from './Footer';
 export default function Result(props) {
     const { weatherData, hourlyData, uvIndex } = props;
 
+
+    // this function is used to convert the default kelvin into Celcius
     function kToC(k) {
         return (k - 273.15).toFixed(2) + "°C";
     }
+
+    // this function is used to convert the default value to extract the time.
     function getTheDate(stamp) {
         const date = new Date(stamp * 1000);
         return date.toLocaleTimeString();
     }
 
+    // convert the deafault value into speed in kmph
     function getTheSpeed(h) {
         return ((h * 60 * 60) / 1000).toFixed(2);
     }
 
+    // convert the default value and extract the current time with AM and PM
     function getTheCurrentTime(stamp) {
         const currentTimeData = new Date(stamp * 1000);
         const hours = currentTimeData.getHours() % 12 || 12;
@@ -43,7 +50,7 @@ export default function Result(props) {
     }
 
 
-
+    // this is used to dynamically fetch the uvIndex and show the text as the uvIndex is about with style and css dynamically.
     let uvDesc = (uvIndex) => {
         if (uvIndex <= 2) {
             uvDesc = {
@@ -176,7 +183,7 @@ export default function Result(props) {
 
         else
             showOnPage = (
-                <div className='text-center' style={{ marginTop: "4rem", marginBottom: "3rem", textShadow:"1.5px 1.5px 2.5px black" }}>
+                <div className='text-center' style={{ marginTop: "4rem", marginBottom: "3rem", textShadow: "1.5px 1.5px 2.5px black" }}>
                     <h2 className='enter-the-cord-or-city-para'>Please enter the city or co-ordinates to get the Weather Forecast!</h2>
                 </div>
             );
@@ -188,54 +195,54 @@ export default function Result(props) {
                 <div className='mb-2 container'>
                     <div className='row'>
                         <div className="col-md-4 col-lg-4 col-8 text-start temp-details-box">
-                            <div className='card mb-md-0 mb-lg-0 mb-3 box-color'>
-                                <div className='card-body'>
-                                    <div className='d-flex'>
-                                        <img src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} alt='' className='img-main-forecast' />
-                                        <div className='d-block city-name-description-forecast text-white'>
-                                            <h4 className='card-title mb-md-0 mb-1 px-2'>{weatherData.name} <span>{kToC(weatherData.main.temp)}</span></h4>
-                                            <h3 className='mb-2 px-2'> {weatherData.weather[0].description}</h3>
-                                        </div>
+                            <div className='card box-color mb-3'>
+                                <h6 className='m-2 mx-3 mb-0 text-white'>{weatherData.sys.country}</h6>
+                                <div className='d-flex'>
+                                    <img src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} alt='' className='img-main-forecast' />
+                                    <div className='d-block city-name-description-forecast text-white'>
+                                        <h4 className='card-title'>{weatherData.name} <span>{kToC(weatherData.main.temp)}</span></h4>
+                                        <h3 className='mb-2 px-2'> {weatherData.weather[0].description}</h3>
                                     </div>
-                                    <div className='row'>
-                                        <div className="col detail-box">
-                                            <div className='card box-temp-detail-color'>
-                                                <div className='weather-temp-detail-box px-2'>
-                                                    <h5>Temperature</h5>
-                                                    <span>{kToC(weatherData.main.temp)}</span>
-                                                </div>
-                                                <div className='weather-temp-detail-box px-2'>
-                                                    <h5>Feels Like</h5>
-                                                    <span>{kToC(weatherData.main.feels_like)}</span>
-                                                </div>
-                                                <div className='weather-temp-detail-box px-2'>
-                                                    <h5>Min Temp.</h5>
-                                                    <span>{kToC(weatherData.main.temp_min)}</span>
-                                                </div>
-                                                <div className='weather-temp-detail-box px-2'>
-                                                    <h5>Max Temp.</h5>
-                                                    <span>{kToC(weatherData.main.temp_max)}</span>
-                                                </div>
-                                                <div className='weather-temp-detail-box px-2'>
-                                                    <h5>Wind Gust</h5>
-                                                    <span>{getTheSpeed(weatherData.wind.gust)}</span>
-                                                </div>
-                                                <div className='weather-temp-detail-box px-2'>
-                                                    <h5>Humidity</h5>
-                                                    <span>{weatherData.main.humidity}%</span>
-                                                </div>
-                                                <div className='weather-temp-detail-box px-2'>
-                                                    <h5>Sunrise</h5>
-                                                    <span>{getTheDate(weatherData.sys.sunrise)}</span>
-                                                </div>
-                                                <div className='weather-temp-detail-box px-2'>
-                                                    <h5>Sunset</h5>
-                                                    <span>{getTheDate(weatherData.sys.sunset)}</span>
-                                                </div>
+                                </div>
+                                <div className='row'>
+                                    <div className="col detail-box">
+                                        <div className='card box-temp-detail-color'>
+                                            <div className='weather-temp-detail-box px-2'>
+                                                <h5>Temperature</h5>
+                                                <span>{kToC(weatherData.main.temp)}</span>
+                                            </div>
+                                            <div className='weather-temp-detail-box px-2'>
+                                                <h5>Feels Like</h5>
+                                                <span>{kToC(weatherData.main.feels_like)}</span>
+                                            </div>
+                                            <div className='weather-temp-detail-box px-2'>
+                                                <h5>Min Temp.</h5>
+                                                <span>{kToC(weatherData.main.temp_min)}</span>
+                                            </div>
+                                            <div className='weather-temp-detail-box px-2'>
+                                                <h5>Max Temp.</h5>
+                                                <span>{kToC(weatherData.main.temp_max)}</span>
+                                            </div>
+                                            <div className='weather-temp-detail-box px-2'>
+                                                <h5>Wind Gust</h5>
+                                                <span>{getTheSpeed(weatherData.wind.gust)}</span>
+                                            </div>
+                                            <div className='weather-temp-detail-box px-2'>
+                                                <h5>Humidity</h5>
+                                                <span>{weatherData.main.humidity}%</span>
+                                            </div>
+                                            <div className='weather-temp-detail-box px-2'>
+                                                <h5>Sunrise</h5>
+                                                <span>{getTheDate(weatherData.sys.sunrise)}</span>
+                                            </div>
+                                            <div className='weather-temp-detail-box px-2'>
+                                                <h5>Sunset</h5>
+                                                <span>{getTheDate(weatherData.sys.sunset)}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 

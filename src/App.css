@@ -63,13 +63,17 @@
 }
 
 .img-main-forecast {
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 5rem;
+  height: 5rem;
+  margin-left: 10px ;
+  transform:scale(125%);
 }
 
 .city-name-description-forecast h4 {
   word-spacing: 0.7rem;
   font-size: 1.5rem;
+  margin: 0;
+  padding: 0 7px;
 }
 
 .city-name-description-forecast h4 span {
@@ -135,7 +139,8 @@
 
 .suggestions-list{
   position: absolute;
-  width: 19.3%;
+  width: 19.3vw;
+  z-index: 999;
 }
 
 /* loader class */
@@ -315,8 +320,46 @@
 
 .footer-main-section h5, i{
   text-shadow: 1px 1px 2px black;
+  color: white;
+}
+.footer-main-section a{
+  text-decoration: none;
 }
 
+.city-name ul li{
+  background: linear-gradient(to top, rgb(241, 241, 241), white);
+  font-weight: 500;
+}
+
+.error-image{
+  background-image: url("/src/images/heavyRain.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 91vh;
+}
+.error-heading{
+  font-size: 15vw;
+  font-weight: 900;
+  padding-top: 6rem;
+  letter-spacing: 1.1rem;
+  text-shadow:1px 1px 2px orange;
+}
+.error-heading span i{
+  color: darkorange;
+  font-size: 14rem;
+  text-shadow: 2px 2px 4px black;
+}
+.error-image h3{
+  font-size: 3rem;
+  text-shadow: 0.5px 0.5px 2px white;
+}
+.error-image p{
+  margin-top: 8rem;
+  font-size: 1.1rem;
+  text-shadow: 0.1px 0.1px 1px black;
+}
 
 
 /* mobile screens */
@@ -396,6 +439,7 @@
     font-size: 1.5rem;
     word-spacing: 1rem;
     margin-top: 0;
+    padding: 0 7px;
   }
 
   .city-name-description-forecast h4 span {
@@ -457,50 +501,218 @@
     width: 80%;
     margin-left: 2rem;
   }
+  
+  .error-heading{
+    font-size: 30vw;
+  }
+  .error-heading span i{
+    font-size: 30vw;
+  }
+  .error-image h3{
+    font-size: 2.4rem;
+    text-shadow: 0.5px 0.5px 2px white;
+  }
+  .suggestions-list li{
+    width: 81.4vw;
+    z-index: 999;
+  }
 }
 
-
-
-@media screen and (min-width:1100px) and (max-width: 1290px) {
-  
-  .recent-box {
-    width: 12vw;
-    position: absolute;
-    top: 12.2%;
-    left: 0.9%;
+@media screen and (min-width:650px) and (max-width: 830px){
+  .Home-heading {
+    font-size: 5rem;
+    margin: 0rem auto;
+    padding-top: 17rem;
   }
-  .recent-box h3{
-    font-size: 1.9vw;
+  .home-lead {
+    font-size: 1.2rem;
+    width: 82%;
+    margin: 2px auto;
+  }
+  .recent-box {
+    width: 21%;
+    position: absolute;
+    top: 17.2%;
+    left: 1%;
   }
   .clear-btnn {
     font-size: 13.5px;
   }
-  .temp-details-box{
-    margin-left: 5rem;
-    width: 33%;
-  }
 
-  .city-name-description-forecast h3{
-    font-size: 18px;
-  }
-  .wrapper img {
-    margin-left: 0.4rem;
-  }
   .enter-the-cord-or-city-para{
-    width: 80%;
-    margin-left: 7rem;
+    width: 67%;
+    margin: 15vh auto;
   }
+
+  .temp-details-box{
+    margin-left: 7.4rem;
+    margin-top: 1.2rem;
+    width: 76%;
+  }
+  .overall-hourly-forecast-section {
+    width: 132%;
+    margin-left: 7.4rem;
+    margin-top: 0.9rem;
+  }
+  
+  .overall-time-forecast-section {
+    width: 139%;
+    margin-left: 7.4rem;
+    margin-top: 0.9rem;
+  }
+  .overall-time-forecast-section h1{
+    font-size: 2rem;
+  }
+  
   .overall-uvIndex-forecast-section {
-    margin-left: -1.3rem;
+    width: 130.5%;
+    margin-left: 10rem;
+    margin-top: 0.9rem;
   }
-
+  .overall-uvIndex-forecast-section h1 {
+    font-size: 2rem;
+  }
+  
   .overall-speed-forecast-section {
-    margin-left: -2.6rem;
+    width: 139%;
+    margin-left: 12rem;
+    margin-top: 0.9rem;
+  }
+  .overall-speed-forecast-section h1 {
+    font-size: 2rem;
+  }
+  
+  .overall-visibility-forecast-section {
+    width: 132%;
+    margin-left: 7.4rem;
+    margin-top: 0.9rem;
+  }
+  .overall-visibility-forecast-section h5{
+    font-size: 1.1rem;
+    margin: 0 0;
+  }
+  .cordinates-heading{
+    display: flex;
+    width: 150%;
   }
 
+  .suggestions-list li{
+    width: 29vw;
+    z-index: 999;
+  }
+  .search-button{
+    line-height: 0;
+  }
+  .search-button span{
+    display: none;
+    line-height: 0;
+  }
+  .search-button button{
+    margin: 0 4.7rem;
+    padding: 0 16.8rem;
+  }
+ 
 }
 
-@media screen and (min-width:650px) and (max-width: 1100px){
+@media screen and (min-width:830px) and (max-width: 930px){
+  .Home-heading {
+    font-size: 5rem;
+    margin: 0rem auto;
+    padding-top: 17rem;
+  }
+  .home-lead {
+    font-size: 1.2rem;
+    width: 82%;
+    margin: 2px auto;
+  }
+  .recent-box {
+    width: 19.5%;
+    position: absolute;
+    top: 16.8%;
+    left: 1.5%;
+  }
+  .clear-btnn {
+    font-size: 14.5px;
+  }
+
+  .enter-the-cord-or-city-para{
+    width: 67%;
+    margin: 15vh auto;
+  }
+
+  .temp-details-box{
+    margin-left: 4.8rem;
+    margin-top: 1.2rem;
+    width: 83.5%;
+  }
+  .overall-hourly-forecast-section {
+    width: 146%;
+    margin-left: 4.8rem;
+    margin-top: 0.9rem;
+  }
+  
+  .overall-time-forecast-section {
+    width: 148%;
+    margin-left: 4.8rem;
+    margin-top: 0.9rem;
+  }
+  .overall-time-forecast-section h1{
+    font-size: 2.2rem;
+  }
+  
+  .overall-uvIndex-forecast-section {
+    width: 148%;
+    margin-left: 8.4rem;
+    margin-top: 0.9rem;
+  }
+  .overall-uvIndex-forecast-section h1 {
+    font-size: 2.2rem;
+  }
+  
+  .overall-speed-forecast-section {
+    width: 148%;
+    margin-left: 12rem;
+    margin-top: 0.9rem;
+  }
+  .overall-speed-forecast-section h1 {
+    font-size: 2.2rem;
+  }
+  
+  .overall-visibility-forecast-section {
+    width: 146%;
+    margin-left: 4.8rem;
+    margin-top: 0.9rem;
+  }
+  .overall-visibility-forecast-section h5{
+    font-size: 1.1rem;
+    margin: 0 0;
+  }
+  .cordinates-heading{
+    display: flex;
+    width: 150%;
+  }
+
+  .suggestions-list li{
+    width: 29vw;
+    z-index: 999;
+  }
+  .search-button{
+    line-height: 0;
+  }
+  .search-button span{
+    display: none;
+    line-height: 0;
+  }
+  .search-button button{
+    margin: 0 4.7rem;
+    padding: 0 16.8rem;
+  }
+ 
+}
+
+
+
+@media screen and (min-width:930px) and (max-width: 1100px){
   .Home-heading {
     margin: 0rem auto;
     padding-top: 17rem;
@@ -569,5 +781,55 @@
     display: flex;
     width: 150%;
   }
+
+  .suggestions-list li{
+    width: 32vw;
+    z-index: 999;
+  }
   
 }
+
+
+@media screen and (min-width:1100px) and (max-width: 1290px) {
+  
+  .recent-box {
+    width: 12vw;
+    position: absolute;
+    top: 12.2%;
+    left: 0.9%;
+  }
+  .recent-box h3{
+    font-size: 1.9vw;
+  }
+  .clear-btnn {
+    font-size: 13.5px;
+  }
+  .temp-details-box{
+    margin-left: 5rem;
+    width: 33%;
+  }
+
+  .city-name-description-forecast h3{
+    font-size: 18px;
+  }
+  .wrapper img {
+    margin-left: 0.4rem;
+  }
+  .enter-the-cord-or-city-para{
+    width: 80%;
+    margin-left: 7rem;
+  }
+  .overall-uvIndex-forecast-section {
+    margin-left: -1.3rem;
+  }
+
+  .overall-speed-forecast-section {
+    margin-left: -2.6rem;
+  }
+  .suggestions-list li{
+    width: 26vw;
+    z-index: 999;
+  }
+
+}
+
