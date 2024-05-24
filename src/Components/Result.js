@@ -196,10 +196,10 @@ export default function Result(props) {
                     <div className='row'>
                         <div className="col-md-4 col-lg-4 col-8 text-start temp-details-box">
                             <div className='card box-color mb-3'>
-                                <h6 className='m-2 mx-3 mb-0 text-white'>{weatherData.sys.country}</h6>
+                                <h6 className='m-2 mx-3 mb-0'>{weatherData.sys.country}</h6>
                                 <div className='d-flex'>
                                     <img src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} alt='' className='img-main-forecast' />
-                                    <div className='d-block city-name-description-forecast text-white'>
+                                    <div className='d-block city-name-description-forecast'>
                                         <h4 className='card-title'>{weatherData.name} <span>{kToC(weatherData.main.temp)}</span></h4>
                                         <h3 className='mb-2 px-2'> {weatherData.weather[0].description}</h3>
                                     </div>
@@ -255,7 +255,7 @@ export default function Result(props) {
                                     <div>
                                         <Slider {...sliderSettingsHourly}>
                                             {hourlyData.map((hour, index) => (
-                                                <div key={index} className='text-center wrapper text-white'>
+                                                <div key={index} className='text-center wrapper'>
                                                     <h5>{hour.time}</h5>
                                                     <img src={`https://openweathermap.org/img/wn/${hour.icon}@2x.png`} alt='' />
                                                     <h4 className='text-center'>{hour.temperature}</h4>
@@ -281,7 +281,7 @@ export default function Result(props) {
                                     <div className='card overall-uvIndex-forecast-section box-color'>
                                         <div className='card-body'>
                                             <h6 className='hourlyforecast-heading'><i className='fa-solid fa-radiation'></i> UV Index</h6>
-                                            <h1 className='mt-3 mb-0 text-white'>{uvIndex}</h1>
+                                            <h1 className='mt-3 mb-0'>{uvIndex}</h1>
                                             <span className={uvDesc.css} style={uvDesc.style}>{uvDesc.text}</span>
                                         </div>
                                     </div>

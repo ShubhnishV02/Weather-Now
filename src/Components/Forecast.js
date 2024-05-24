@@ -144,16 +144,18 @@ class Forecast extends Component {
   }
 
 
-// this ChangeHandler binding function runs when the user clicked on city , lat or lon and insert the value.
+  // this ChangeHandler binding function runs when the user clicked on city , lat or lon and insert the value.
 
   changeHandler = (event) => {
     const name = event.target.name;
     // console.log(name);
     if (name === "city") {
       const city = event.target.value;
-      this.setState({ city }, () => {
-        this.fetchSuggestions(city); // Fetch suggestions when city changes
-      });
+      this.setState({ city }
+        // , () => {
+        // this.fetchSuggestions(city); // Fetch suggestions when city changes
+        // }
+      );
     } else if (name === "lat") {
       this.setState({
         lat: event.target.value,
@@ -168,27 +170,14 @@ class Forecast extends Component {
 
   // fetchSuggestions function runs when user enter the city in the input section and city it grabs from the changeHandler binding function used here as a cityName parameter.
 
-  fetchSuggestions = async (cityName) => {
-    try {
-      // Add a validation for cityName length to ignor the errors while typing the city names if not using then it will show the error on every button you typed.
-      if (cityName.length < 3) {
-        this.setState({ suggestions: [], message: false });
-        return;
-      }
-      const response = await axios.get(`https://api.openweathermap.org/data/2.5/find?q=${cityName}&cnt=5&appid=5a1e4432cbaef39b09b86fc012109f8f`);
 
-      /// Check if the response data has a list property
-      if (response.data.list && response.data.list.length > 0) {
-        const suggestions = response.data.list.map((item) => `${item.name}, ${item.sys.country}`);
-        this.setState({ suggestions, message: false });
-      } else {
-        this.setState({ suggestions: [], message: true });
-      }
-    } catch (error) {
-      console.error(error);
-      this.setState({ suggestions: [], message: true });
-    }
-  };
+
+
+
+  // Fetchsuggestion here is not included... it is included in Complete Weather App Forecast by Shubhnish Verma
+
+
+
 
 
   // Handle the click on a suggestion, for example, you can update the state to hide suggestions
@@ -407,72 +396,37 @@ class Forecast extends Component {
 
   render() {
 
-    // Function to get the background image based on weather condition
-    const getBackgroundImage = () => {
-      const weatherCondition = this.state.weatherData.weather && this.state.weatherData.weather[0].main;
-      // console.log(this.state.weatherData);
 
-      switch (weatherCondition) {
-        case 'Clear':
-          return `url(${clearSkyImage})`;
-        case 'Clouds':
-          if (this.state.weatherData.weather[0].description === "broken clouds") {
-            return `url(${brokenClouds})`;
-          } else if (this.state.weatherData.weather[0].description === "scattered clouds") {
-            return `url(${scatteredClouds})`;
-          } else if (this.state.weatherData.weather[0].description === "overcast clouds") {
-            return `url(${cloudyImage})`;
-          } else {
-            return `url(${defaultCloudImage})`
-          };
-        case 'Rain':
-          return `url(${rainImage})`;
-        case 'Haze':
-          return `url(${hazeImage})`;
-        case 'Smoke':
-          return `url(${smokeImage})`;
-        case 'Thunderstorm':
-          return `url(${thunderstormImage})`;
-        case 'Drizzle':
-          return `url(${rainImage})`;
-        case 'Snow':
-          return `url(${snowImage})`;
-        case 'Mist':
-          return `url(${mistImage})`;
-        case 'Fog':
-          return `url(${fogImage})`;
-        // Add more cases for other weather conditions as needed
-        default:
-          return `url(${defaultImage})`;
-      }
-    };
+
+    // this is included in complete weather app by shubhnish verma
+
+
+
+    // Function to get the background image based on weather condition
+    // const getBackgroundImage = () => {
+    // };
 
 
     // Inline styles for the background image
-    const backgroundImageStyle = {
-      backgroundImage: getBackgroundImage(),
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      position: 'relative', // Needed for stacking pseudo-element
-      minHeight: '100vh',
-    };
+    // const backgroundImageStyle = {
+
+    // };
 
     // overlayStyle is used to darken the background image as needed to show the upper side clear or brighter.
-    const overlayStyle = {
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      pointerEvents: "none",
-      background: 'rgba(0, 0, 0, 0.2)', // Adjust the alpha value for darkness
-    };
+    // const overlayStyle = {
+    //   content: '""',
+    //   position: 'absolute',
+    //   top: 0,
+    //   right: 0,
+    //   bottom: 0,
+    //   left: 0,
+    //   pointerEvents: "none",
+    //   background: 'rgba(0, 0, 0, 0.2)', // Adjust the alpha value for darkness
+    // };
 
     return (
-      <div style={backgroundImageStyle}>
-        <div style={overlayStyle}></div>
+      // <div style={backgroundImageStyle}>
+      // <div style={overlayStyle}></div>
         <div className='container py-1'>
           <h3 className='text-white pt-1' style={{ textShadow: "1.5px 1.5px 2.5px black" }}>Weather Forecast</h3>
           <Recent recent={this.state.recent} research={this.reSearchHandler} deleteRecents={this.deleteRecentHandler} />
@@ -487,7 +441,7 @@ class Forecast extends Component {
             change={this.changeHandler}
             getLocation={this.locationHandler}
             search={this.searchHandler}
-            fetchSuggestions={this.fetchSuggestions}
+            // fetchSuggestions={this.fetchSuggestions}
             suggestionClickHandler={this.suggestionClickHandler}
           >
           </Search>
@@ -495,7 +449,7 @@ class Forecast extends Component {
           <Result isSearched={this.state.isSearched} weatherData={this.state.weatherData} hourlyData={this.state.hourlyData} uvIndex={this.state.uvIndex}>
           </Result>
         </div>
-      </div>
+      //</div>
 
     )
   }
